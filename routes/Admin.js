@@ -1,12 +1,19 @@
 const router=require("express").Router();
 const User=require("../models/User");
-
+const bcrypt = require("bcrypt");//asynchronous function 
 //update user
 router.patch("/updateUser",async (req,res)=>{
     
     const username=req.body.username;
     const password=req.body.password;
-    User.update({username:username},{$set: req.body},function(err){
+    const salt=await bcrypt.genSalt(10);
+    const hashedPassword=await bcrypt.hash(req.body.password,salt);
+    const user={
+        username:username,
+        password:hashedPassword,
+        Department:req.body.Department,
+    }
+    User.update({username:username},{$set: user},function(err){
 				if(!err){
                     res.status(200).json("Successfully updated password.")
 				}else{

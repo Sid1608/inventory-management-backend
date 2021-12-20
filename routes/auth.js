@@ -37,7 +37,7 @@ router.post("/login",async (req,res)=>{
     const password=req.body.password;
     console.log(username,password);
     try{
-        const user =await User.findOne({email:req.body.username});
+        const user =await User.findOne({username:req.body.username});
         !user && res.status(404).send({status:"oops user not found!",user:false});
         const validPassword=await bcrypt.compare(req.body.password,user.password);
         !validPassword && res.status(400).json({status:"wrong password",user:false});
