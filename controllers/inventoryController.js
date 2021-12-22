@@ -29,3 +29,28 @@ export const inventory=async (req,res)=>{
 })
 
 }
+
+export const searchItem=async function(req,res){
+    const item_id = res.body.item_id;
+  
+    inventory.findOne({item_id: item_id},function(err,foundItem){
+        if (err) throw err;
+        console.log(result1);   
+})
+
+}
+
+export const toInventory=async (req,res)=>{
+    var query = { item_id: "A02" }; // we have to take the item_id of the item which we want to add into inventory. 
+        inventory.find(query).toArray(function (err, result) {
+        if (err) throw err;
+        const count = result[0].item_count
+
+        var newvalues = { $set: { item_count: count + 25 } }; // here 25 is number of items which has to be added again to the inventory.
+        inventory.updateOne(query, newvalues, function (err, res) {
+            if (err) throw err;
+            console.log("1 document updated");
+            db.close();
+        });
+    });   
+}

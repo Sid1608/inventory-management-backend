@@ -49,7 +49,7 @@ export const searchOrder = async function(req,res){
 })
 }
 
-//Getting Recent Orders: to be display in use dashboard
+//Getting Recent Orders: to be display in user dashboard
 export const recentOrder =async (req,res)=>{
     var query = {order_date: -1}; // we have to take the item_id of the item which we want to add into inventory. 
     Order.find().sort(query).toArray(function (err, result) {
@@ -60,7 +60,7 @@ export const recentOrder =async (req,res)=>{
 
 
 
-//User order items 
+//User order items :only user
 
 export const orderItem =async (req,res)=>{
     const Order = new Article({
