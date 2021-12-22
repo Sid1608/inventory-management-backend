@@ -3,7 +3,7 @@
 
 const mongoose=require('mongoose');
 
-const ItemSchema =new mongoose.Schema({
+const OrderSchema =new mongoose.Schema({
     order_id:{
         type: String,
         required: true,
@@ -43,4 +43,4 @@ const ItemSchema =new mongoose.Schema({
 
 );
 
-module.exports=mongoose.model("Item",ItemSchema);
+module.exports=mongoose.model("Order",OrderSchema);

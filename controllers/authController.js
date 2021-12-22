@@ -1,10 +1,10 @@
-const router=require("express").Router();
 const User=require("../models/User");
 const bcrypt = require("bcrypt");//asynchronous function 
+const jwt=require("jsonwebtoken")
 
-const {registerUser,loginUser} =require("../controllers/authController.js");
-//1.Register
-router.post("/register",async (req,res)=>{
+
+///Register User
+export const registerUser = async (req,res)=>{
     
     try{
         //generate new password
@@ -28,10 +28,11 @@ router.post("/register",async (req,res)=>{
         console.log(err);
         res.status(500).json({status: 'error',user:false,error:err});
     }
-});
+}
 
-//2.Login Route
-router.post("/login",async (req,res)=>{
+
+//Login User
+export const loginUser=async (req,res)=>{
     
     const username=req.body.username;
     const password=req.body.password;
@@ -55,8 +56,4 @@ router.post("/login",async (req,res)=>{
     }
 
 
-})
-
-
-
-module.exports=router;
+}
