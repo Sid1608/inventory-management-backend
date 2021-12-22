@@ -1,8 +1,7 @@
 const Inventory=require("../models/Inventory");
 
 
-
-
+//?
 export const FNC=async (req,res)=>{
     var query1 = {date_purchased: {$lt: new Date((new Date())-43800*60*60*1000)}}; // we have to take the item_id of the item which we want to add into inventory. 
     Inventory.find(query1).toArray(function (err, result1) {
@@ -19,5 +18,5 @@ export const FNC=async (req,res)=>{
 
 export const inventory=async (req,res)=>{
 
-    
+
 }

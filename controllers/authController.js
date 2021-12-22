@@ -20,9 +20,6 @@ export const registerUser = async (req,res)=>{
         })
         //save user and respond
         const user=await newUser.save();
-        // const token=jwt.sign({
-        //     name:user.username,
-        // },'secret123')
         res.status(200).json({status: 'ok',user:user});
     }catch(err){
         console.log(err);
@@ -55,5 +52,9 @@ export const loginUser=async (req,res)=>{
         res.status(500).json(err)
     }
 
+}
+
+
+export const logout =(req,res)=>{
 
 }

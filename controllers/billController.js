@@ -1,8 +1,3 @@
-
-
-
-
-
 const Bill=require("../models/Bill");
 
 
