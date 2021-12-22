@@ -1,12 +1,12 @@
 const router=require("express").Router();
 const User=require("../models/User");
-const {userDashboard} =require("../controllers/Users.js");
-const {orderHistoryUser,orderItem} =require("../controllers/orderController");
+
+const {orderHistoryUser,orderItem,recentOrder} =require("../controllers/orderController");
 
 
 
 //Dashboard Route
-router.get("/dashboard",userDashboard);
+router.get("/dashboard",recentOrder);
 
 // Order-Items Router
 router.post("/orderItem",orderItem)

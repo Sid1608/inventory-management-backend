@@ -1,23 +1,16 @@
 const User=require("../models/User");
 
-
-
-
-
-//user Dashboard
-export const  userDashboard=async (req,res)=>{
-
-
-}
-
-
 // Getting all users: only Admin
 export const allUsers =async (req,res)=>{
-
-
-    
+		User.find(function (err, users) {
+			if (!err) {
+				res.send(users);
+			}
+			else {
+				res.send(err);
+			}
+		})
 }
-
 
 // Updating users password :only admin
 export const updateUser = async (req,res)=>{
