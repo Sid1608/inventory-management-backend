@@ -31,7 +31,7 @@ export const orderHistoryUser=async function(req,res){
 
 
 
-// for Serching order by ordername
+// for Searching order by orderid and for Order Details
 export const searchOrder = async function(req,res){
     Order.findOne({order_id :req.body.order_id},function(err,foundOrder){
     if(!err){
@@ -74,3 +74,30 @@ export const orderItem =async (req,res)=>{
     });
 
 }
+
+
+//Reject Order  Request
+
+export const rejectOrder =(req,res)=>{
+    Order.deleteOne({order_id:req.body.order_id},(err)=>{
+        if(err){
+            res.status(500).json(err);
+        }else{
+            res.status(200).json("order rejected successfully")
+        }
+    });
+}
+
+
+
+// Accept Order Request
+export const rejectOrder =(req,res)=>{
+    Order.update({isVerified:true},(err)=>{
+        if(err){
+            res.status(500).json(err);
+        }else{
+            res.status(200).json("order verified successfully")
+        }
+    });
+}
+

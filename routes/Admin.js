@@ -5,20 +5,11 @@ const {updateUser,deleteUser,allUsers} = require("../controllers/userController"
 const {allOrders,orderHistoryAll}=require("../controllers/orderController");
 const {inventory}=require("../controllers/inventoryController");
 
-
-
-
-//Register User
-router.get("/register")
-
 //1.Inventory Route
 router.get("/inventory",inventory);
 
 // 2.Get All Orders Route
 router.get("/orders",allOrders);
-
-// //3.Order History Route
-// router.get("/orderHistory",orderHistoryAll);
 
 //3.Issued Items Route
 router.get("/issuedItems",issuedItems);
