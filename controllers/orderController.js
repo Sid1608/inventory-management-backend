@@ -18,12 +18,6 @@ export const allOrders=async function(req,res){
 }
 
 
-// // getting all order History: for admin
-// export const orderHistoryAll=async function(req,res){
-
-// }
-
-
 //getting specific user order History: for user
 export const orderHistoryUser=async function(req,res){
     Order.find({user_id:req.body.user_id},(err,orders)=>{
@@ -63,7 +57,7 @@ export const recentOrder =async (req,res)=>{
 //User order items :only user
 
 export const orderItem =async (req,res)=>{
-    const Order = new Article({
+    const Order = new Order({
         item_id: req.body.item_id,
         item_count:req.body.item_count,
         remark:req.body.remark,

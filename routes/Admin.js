@@ -1,57 +1,35 @@
 const router=require("express").Router();
 const User=require("../models/User");
-const bcrypt = require("bcrypt");//asynchronous function 
+const bcrypt = require("bcrypt");
 const {updateUser,deleteUser,allUsers} = require("../controllers/userController")
 const {allOrders,orderHistoryAll}=require("../controllers/orderController");
-const {issuedItems}=require("../controllers/issuedItems");
 const {inventory}=require("../controllers/inventoryController");
+
+
+
+
+//Register User
+router.get("/register")
 
 //1.Inventory Route
 router.get("/inventory",inventory);
 
-
 // 2.Get All Orders Route
-router.get("/allOrders",allOrders);
+router.get("/orders",allOrders);
 
+// //3.Order History Route
+// router.get("/orderHistory",orderHistoryAll);
 
+//3.Issued Items Route
+router.get("/issuedItems",issuedItems);
 
-
-//3.Order History Route
-router.get("/orderHistory",orderHistoryAll);
-
-
-
-
-//4.Issued Items Route
-router.get("/issuedItems",issuedItems)
-
-
-
-//5.Get All Users Route
-          // router.get("/allUsers")
-router.get("/allUsers",allUsers);
-
-
-
-
-
-//6.update user
+//4.Get All Users Route       
+router.get("/users",allUsers);
+//5.update user
 router.patch("/updateUser",updateUser);
-//7.Delete User
-router.delete("/deleteUser/:username",deleteUser)
+//6.Delete User
+router.delete("/deleteUser/:username",deleteUser);
 
-
-
-
-
-
-
-
-
-
-
-
-
-//Issued Items Route
+//7.Issued Items Route
 
 module.exports=router;

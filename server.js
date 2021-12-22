@@ -1,26 +1,24 @@
 const express=require("express");
-const app=express();
 const mongoose=require('mongoose');
 const dotenv=require("dotenv");
-const helmet=require("helmet");
-const morgan=require("morgan");
-dotenv.config();
-const authRoutes=require("./routes/auth.js"); 
+const authRoutes=require("./routes/Auth.js"); 
 const userRoutes=require("./routes/Users.js");
 const adminRoutes=require("./routes/Admin.js");
+
+dotenv.config();
+const app=express();
+
+//MongoDb Connection
 mongoose.connect(process.env.MONGO_URL,(err)=>{
     if(err) {throw err;}
     console.log('conneted to mongodb')
 })
 
-//middlewares
+//Middlewares
 app.use(express.json());
-app.use(helmet());
-app.use(morgan("common"));
 app.use("/auth",authRoutes)
 app.use("/user",userRoutes)
 app.use("/admin",adminRoutes)
-
 
 
 

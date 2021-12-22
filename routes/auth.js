@@ -3,6 +3,7 @@ const User=require("../models/User");
 const bcrypt = require("bcrypt");//asynchronous function 
 
 const {registerUser,loginUser} =require("../controllers/authController.js");
+
 //1.Register
 router.post("/register",registerUser);
 
