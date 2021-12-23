@@ -12,7 +12,7 @@ const ItemSchema =new mongoose.Schema({
     },
     expected_cost:{
         type:Number,
-        default:0.0,
+        default:0,
        
     },
     item_decription:{

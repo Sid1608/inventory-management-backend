@@ -10,6 +10,11 @@ const InventorySchema =new mongoose.Schema({
         type: Number,
         default:0,
     },
+    issued_count:{
+        type:Number,
+        default:0,
+        
+    }
 },
 {
     timestamps: true

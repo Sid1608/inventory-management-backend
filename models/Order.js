@@ -8,6 +8,10 @@ const OrderSchema =new mongoose.Schema({
         type: String,
         unique:true,
     },
+    user_id:{
+        type:String,
+        required:true,
+    },
     item_id:{
         type:String,
         require: true,

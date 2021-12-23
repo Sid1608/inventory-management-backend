@@ -5,7 +5,6 @@ const Order= require("../models/Order")
 
 // getting all order: for admin
 exports.allOrders=async function(req,res){
-    
 		Order.find(function (err, orders) {
 			if (!err) {
 				res.send(orders);
@@ -14,7 +13,6 @@ exports.allOrders=async function(req,res){
 				res.send(err);
 			}
 		})
-
 }
 
 
@@ -48,7 +46,7 @@ exports.recentOrder =async (req,res)=>{
     var query = {order_date: -1}; // we have to take the item_id of the item which we want to add into inventory. 
     Order.find().sort(query).toArray(function (err, result) {
         if (err) throw err;
-        console.log(result[0]);
+        res.status(200).json({order:result[0]});
     });
 }
 
@@ -62,6 +60,7 @@ exports.orderItem =async (req,res)=>{
         remark:req.body.remark,
         order_date:req.body.order_data,
         total_cost:req.body.total_cost
+        // items_issued=[{item_id,item_count}]
     });
     order.save(function (err) {
         if (!err) {
@@ -90,7 +89,18 @@ exports.rejectOrder =(req,res)=>{
 
 // Accept Order Request
 exports.acceptOrder =(req,res)=>{
-    Order.update({isVerified:true},(err)=>{
+    const order_id=req.params.order_id;
+    const order = new Order({
+        _id:req.body.order_id,
+        item_id: req.body.item_id,
+        item_count:req.body.item_count,
+        remark:req.body.remark,
+        total_cost:req.body.total_cost,
+        order_date:req.body.order_data,
+        isVerified:true,
+        // items_issued=[{item_id,item_count}]
+    });
+    Order.updateOne({order_id:req.body.order_id},{$set:order},(err)=>{
         if(err){
             res.status(500).json(err);
         }else{

@@ -25,7 +25,7 @@ exports.updateUser = async (req,res)=>{
         password:hashedPassword,
         Department:req.body.Department,
     }
-    User.update({username:username},{$set: user},function(err){
+    User.updateOne({username:username},{$set: user},function(err){
 				if(!err){
                     res.status(200).json("Successfully updated password.")
 				}else{
