@@ -11,7 +11,7 @@ const BillSchema =new mongoose.Schema({
         required: true,
     },
     bill_amount:{
-        type: Double,
+        type: Number,
         required: true,
     },
     bill_date:{

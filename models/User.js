@@ -17,6 +17,10 @@ const UserSchema =new mongoose.Schema({
         type:String,
         default:"",
        
+    },
+    Name:{
+        type:String,
+        default:"",
     }
    
 },

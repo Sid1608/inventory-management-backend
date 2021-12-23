@@ -1,10 +1,11 @@
 const User=require("../models/User");
-
+const bcrypt = require("bcrypt");//asynchronous function 
+const jwt=require("jsonwebtoken")
 // Getting all users: only Admin
-export const allUsers =async (req,res)=>{
+exports.allUsers =async (req,res)=>{
 		User.find(function (err, users) {
 			if (!err) {
-				res.send(users);
+				res.status(200).json({users:users});
 			}
 			else {
 				res.send(err);
@@ -13,7 +14,7 @@ export const allUsers =async (req,res)=>{
 }
 
 // Updating users password :only admin
-export const updateUser = async (req,res)=>{
+exports.updateUser = async (req,res)=>{
     
     const username=req.body.username;
     const password=req.body.password;
@@ -36,7 +37,7 @@ export const updateUser = async (req,res)=>{
 }
 
 //Deleting User :only admin
-export const deleteUser=async (req,res)=>{
+exports.deleteUser=async (req,res)=>{
     
     User.deleteOne({username:req.params.username},function(err){
         if(!err){

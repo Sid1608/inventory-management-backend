@@ -4,7 +4,7 @@ const jwt=require("jsonwebtoken")
 
 
 ///Register User
-export const registerUser = async (req,res)=>{
+exports.registerUser = async (req,res)=>{
     
     try{
         //generate new password
@@ -29,7 +29,7 @@ export const registerUser = async (req,res)=>{
 
 
 //Login User
-export const login=async (req,res)=>{
+exports.login=async (req,res)=>{
     
     const username=req.body.username;
     const password=req.body.password;
@@ -55,6 +55,6 @@ export const login=async (req,res)=>{
 }
 
 
-export const logout =(req,res)=>{
+exports.logout =(req,res)=>{
 
 }

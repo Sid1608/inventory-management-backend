@@ -11,7 +11,7 @@ const ItemSchema =new mongoose.Schema({
         required: true,
     },
     expected_cost:{
-        type:Double,
+        type:Number,
         default:0.0,
        
     },

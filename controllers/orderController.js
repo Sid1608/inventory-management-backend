@@ -4,7 +4,7 @@ const Order= require("../models/Order")
 
 
 // getting all order: for admin
-export const allOrders=async function(req,res){
+exports.allOrders=async function(req,res){
     
 		Order.find(function (err, orders) {
 			if (!err) {
@@ -19,10 +19,10 @@ export const allOrders=async function(req,res){
 
 
 //getting specific user order History: for user
-export const orderHistoryUser=async function(req,res){
+exports.orderHistoryUser=async function(req,res){
     Order.find({user_id:req.body.user_id},(err,orders)=>{
         if(!err){
-            res.send(orders);
+            res.status(200).json({orders:orders});
         }else{
             res.send(err);
         }
@@ -32,7 +32,7 @@ export const orderHistoryUser=async function(req,res){
 
 
 // for Searching order by orderid and for Order Details
-export const searchOrder = async function(req,res){
+exports.searchOrder = async function(req,res){
     Order.findOne({order_id :req.body.order_id},function(err,foundOrder){
     if(!err){
         res.send(foundOrder);
@@ -44,7 +44,7 @@ export const searchOrder = async function(req,res){
 }
 
 //Getting Recent Orders: to be display in user dashboard
-export const recentOrder =async (req,res)=>{
+exports.recentOrder =async (req,res)=>{
     var query = {order_date: -1}; // we have to take the item_id of the item which we want to add into inventory. 
     Order.find().sort(query).toArray(function (err, result) {
         if (err) throw err;
@@ -55,8 +55,7 @@ export const recentOrder =async (req,res)=>{
 
 
 //User order items :only user
-
-export const orderItem =async (req,res)=>{
+exports.orderItem =async (req,res)=>{
     const Order = new Order({
         item_id: req.body.item_id,
         item_count:req.body.item_count,
@@ -77,8 +76,7 @@ export const orderItem =async (req,res)=>{
 
 
 //Reject Order  Request
-
-export const rejectOrder =(req,res)=>{
+exports.rejectOrder =(req,res)=>{
     Order.deleteOne({order_id:req.body.order_id},(err)=>{
         if(err){
             res.status(500).json(err);
@@ -91,7 +89,7 @@ export const rejectOrder =(req,res)=>{
 
 
 // Accept Order Request
-export const rejectOrder =(req,res)=>{
+exports.acceptOrder =(req,res)=>{
     Order.update({isVerified:true},(err)=>{
         if(err){
             res.status(500).json(err);

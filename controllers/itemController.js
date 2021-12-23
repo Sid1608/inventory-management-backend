@@ -1,7 +1,7 @@
 const User=require("../models/User");
 const Item=require("../models/Item");
 
-export const searchItem=async function(req,res){
+exports.searchItem=async function(req,res){
     const itemName = res.body.item;
   
     Item.findOne({name : itemName},function(err,foundItem){
@@ -15,6 +15,6 @@ export const searchItem=async function(req,res){
 
 }
 
-export const issuedItems=async (req,res)=>{
+exports.issuedItems=async (req,res)=>{
     
 }

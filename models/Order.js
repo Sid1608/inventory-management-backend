@@ -27,7 +27,7 @@ const OrderSchema =new mongoose.Schema({
         required: true,
     },
     total_cost:{
-        type:Decimal,
+        type:Number,
         default:0.0,
     },
     isVerified:{
