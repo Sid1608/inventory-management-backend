@@ -56,14 +56,14 @@ exports.recentOrder =async (req,res)=>{
 
 //User order items :only user
 exports.orderItem =async (req,res)=>{
-    const Order = new Order({
+    const order = new Order({
         item_id: req.body.item_id,
         item_count:req.body.item_count,
         remark:req.body.remark,
         order_date:req.body.order_data,
         total_cost:req.body.total_cost
     });
-    Order.save(function (err) {
+    order.save(function (err) {
         if (!err) {
             res.send("Succesfully added a new Order");
         }

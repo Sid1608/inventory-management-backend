@@ -6,7 +6,6 @@ const mongoose=require('mongoose');
 const OrderSchema =new mongoose.Schema({
     order_id:{
         type: String,
-        required: true,
         unique:true,
     },
     item_id:{
@@ -20,11 +19,11 @@ const OrderSchema =new mongoose.Schema({
     },
     remark:{
         type: String,
-        required: true,
+        // required: true,
     },
-    Order_date:{
+    order_date:{
         type: Date,
-        required: true,
+        // required: true,
     },
     total_cost:{
         type:Number,
