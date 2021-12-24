@@ -18,7 +18,7 @@ exports.allOrders=async function(req,res){
 
 //getting specific user order History: for user
 exports.orderHistoryUser=async function(req,res){
-    Order.find({user_id:req.body.user_id},(err,orders)=>{
+    Order.find({user_id:req.params.userId},(err,orders)=>{
         if(!err){
             res.status(200).json({orders:orders});
         }else{
@@ -31,7 +31,7 @@ exports.orderHistoryUser=async function(req,res){
 
 // for Searching order by orderid and for Order Details
 exports.searchOrder = async function(req,res){
-    Order.findOne({order_id :req.body.order_id},function(err,foundOrder){
+    Order.findOne({order_id :req.params.orderId},function(err,foundOrder){
     if(!err){
         res.send(foundOrder);
     }
@@ -43,9 +43,11 @@ exports.searchOrder = async function(req,res){
 
 //Getting Recent Orders: to be display in user dashboard
 exports.recentOrder =async (req,res)=>{
+    const user_id=req.params.userId
     var query = {order_date: -1}; // we have to take the item_id of the item which we want to add into inventory. 
-    Order.find().sort(query).toArray(function (err, result) {
+    Order.find({user_id:user_id},(err, result)=>{
         if (err) throw err;
+        result.sort();
         res.status(200).json({order:result[0]});
     });
 }
@@ -78,7 +80,8 @@ exports.orderItem =async (req,res)=>{
 
 //Reject Order  Request
 exports.rejectOrder =(req,res)=>{
-    Order.deleteOne({order_id:req.body.order_id},(err)=>{
+    const order_id=req.params.orderId;
+    Order.deleteOne({order_id:order_id},(err)=>{
         if(err){
             res.status(500).json(err);
         }else{
@@ -91,23 +94,38 @@ exports.rejectOrder =(req,res)=>{
 
 // Accept Order Request
 exports.acceptOrder =(req,res)=>{
-    const order_id=req.params.order_id;
-    const order = new Order({
-        _id:req.body.order_id,
-        item_id: req.body.item_id,
-        item_count:req.body.item_count,
-        remark:req.body.remark,
-        total_cost:req.body.total_cost,
-        order_date:req.body.order_data,
-        isVerified:true,
-        // items_issued=[{item_id,item_count}]
-    });
-    Order.updateOne({order_id:req.body.order_id},{$set:order},(err)=>{
-        if(err){
-            res.status(500).json(err);
+    const order_id=req.params.orderId;
+    console.log(order_id);
+    Order.find({_id:order_id},(err,order)=>{
+        if(!err){
+               if(order){
+                   console.log(order)
+                const ord ={
+                    _id:order._id,
+                    item_id: order.item_id,
+                    item_count:order.item_count,
+                    remark:order.remark,
+                    total_cost:order.total_cost,
+                    order_date:order.order_date,
+                    issued_items:order.issued_items,
+                    isVerified:true,
+                }
+                console.log(ord.isVerified,ord.remark);
+                Order.updateOne({_id:order_id},{$set:ord},(err)=>{
+                    if(err){
+                        res.status(500).json(err);
+                    }else{
+                        res.status(200).json("order verified successfully")
+                    }
+                });
+
+            }else{
+                res.send("order not found");
+            }
         }else{
-            res.status(200).json("order verified successfully")
+            res.send(err);
         }
-    });
+    })
+    
 }
 
