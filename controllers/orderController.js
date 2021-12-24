@@ -1,7 +1,7 @@
 
 
 const Order= require("../models/Order")
-
+const mongoose = require("mongoose")
 
 // getting all order: for admin
 exports.allOrders=async function(req,res){
@@ -54,22 +54,24 @@ exports.recentOrder =async (req,res)=>{
 
 //User order items :only user
 exports.orderItem =async (req,res)=>{
-    const order = new Order({
-        item_id: req.body.item_id,
-        item_count:req.body.item_count,
-        remark:req.body.remark,
-        order_date:req.body.order_data,
-        total_cost:req.body.total_cost
-        // items_issued=[{item_id,item_count}]
-    });
-    order.save(function (err) {
-        if (!err) {
-            res.send("Succesfully added a new Order");
-        }
-        else {
-            res.send(err);
-        }
-    });
+    try{
+        const newOrder = await new Order({
+            _id:new mongoose.Types.ObjectId(),
+            user_id:req.body.user_id,
+            item_id: req.body.item_id,
+            item_count:req.body.item_count,
+            remark:req.body.remark,
+            order_date:Date.now(),
+            total_cost:req.body.total_cost
+            // items_issued=[{item_id,item_count}]
+        });
+        const order=await newOrder.save();
+        res.status(201).json({status: 'Succesfully added a new Order',Order:order});
+    }catch(err){
+        console.log(err);
+        res.status(500).json({status: 'Order Not Added Successfully',order:false,error:err});
+    }
+
 
 }
 
