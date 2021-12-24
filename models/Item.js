@@ -1,10 +1,8 @@
 const mongoose=require('mongoose');
 
 const ItemSchema =new mongoose.Schema({
-    item_id:{
-        type:String,
-        require: true,
-        unique:true
+    _id:{
+        type:mongoose.Schema.Types.ObjectId,
     },
     item_name:{
         type: String,

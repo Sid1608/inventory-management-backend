@@ -4,18 +4,19 @@
 const mongoose=require('mongoose');
 
 const OrderSchema =new mongoose.Schema({
-    order_id:{
-        type: String,
-        unique:true,
+    _id:{
+        type:mongoose.Schema.Types.ObjectId,
     },
     user_id:{
-        type:String,
+        type:mongoose.Schema.Types.ObjectId,
+        ref: 'User',
         required:true,
+        
     },
     item_id:{
-        type:String,
-        require: true,
-        unique:true
+        type:mongoose.Schema.Types.ObjectId,
+        ref: 'Item',
+        required:true,
     },
     item_count:{
         type:Number,
@@ -23,6 +24,7 @@ const OrderSchema =new mongoose.Schema({
     },
     remark:{
         type: String,
+        default:""
         // required: true,
     },
     order_date:{
@@ -31,7 +33,7 @@ const OrderSchema =new mongoose.Schema({
     },
     total_cost:{
         type:Number,
-        default:0.0,
+        default:0,
     },
     isVerified:{
         type:Boolean,
