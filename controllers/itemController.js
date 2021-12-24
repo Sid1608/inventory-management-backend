@@ -21,18 +21,18 @@ exports.searchItem=async function(req,res){
 // add Item : Only Admin
 exports.addItem=async (req,res)=>{
     try{
-
         const newItem= await new Item({
             _id: new mongoose.Types.ObjectId(),
             item_name:req.body.item_name,
             expected_cost:req.body.expected_cost,
             item_description:req.body.item_description,
+            item_count:req.body.item_count
         })
         const item = await newItem.save();
         res.status(200).json({status: 'Item Added Successfully',item:item});
     }catch(err){
         console.log(err);
-        res.status(500).json({status: 'error',user:false,error:err});
+        res.status(500).json({status: 'Item Not Added Successfully',item:false,error:err});
     }
 
 }
