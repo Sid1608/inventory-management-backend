@@ -13,11 +13,11 @@ const OrderSchema =new mongoose.Schema({
         required:true,
         
     },
-    item_id:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref: 'Item',
-        required:true,
-    },
+    // item_id:{
+    //     type:mongoose.Schema.Types.ObjectId,
+    //     ref: 'Item',
+    //     required:true,
+    // },
     item_count:{
         type:Number,
         default:0,
@@ -35,6 +35,7 @@ const OrderSchema =new mongoose.Schema({
         type:Number,
         default:0,
     },
+    issued_items:[{item_name:String,item_count:Number,description:String}],
     isVerified:{
         type:Boolean,
         default:false,

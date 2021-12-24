@@ -7,7 +7,7 @@ const mongoose = require("mongoose")
 exports.allOrders=async function(req,res){
 		Order.find(function (err, orders) {
 			if (!err) {
-				res.send(orders);
+				res.status(200).json({order:orders});
 			}
 			else {
 				res.send(err);
@@ -62,8 +62,8 @@ exports.orderItem =async (req,res)=>{
             item_count:req.body.item_count,
             remark:req.body.remark,
             order_date:Date.now(),
-            total_cost:req.body.total_cost
-            // items_issued=[{item_id,item_count}]
+            total_cost:req.body.total_cost,
+            issued_items:req.body.issued_items,
         });
         const order=await newOrder.save();
         res.status(201).json({status: 'Succesfully added a new Order',Order:order});
