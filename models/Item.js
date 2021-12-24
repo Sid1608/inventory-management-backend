@@ -2,7 +2,7 @@ const mongoose=require('mongoose');
 
 const ItemSchema =new mongoose.Schema({
     _id:{
-        type:mongoose.Schema.Types.ObjectId,
+        type:mongoose.Schema.Types.ObjectId
     },
     item_name:{
         type: String,
@@ -13,10 +13,14 @@ const ItemSchema =new mongoose.Schema({
         default:0,
        
     },
-    item_decription:{
+    item_description:{
         type:String,
         default:"",
        
+    },
+    item_count:{
+        type:Number,
+        default:1,
     }
    
 },

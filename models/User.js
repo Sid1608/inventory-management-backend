@@ -16,12 +16,12 @@ const UserSchema =new mongoose.Schema({
         required: true,
         min:6
     },
-    Department:{
+    department:{
         type:String,
         default:"",
        
     },
-    Name:{
+    name:{
         type:String,
         default:"",
     },

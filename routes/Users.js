@@ -12,7 +12,7 @@ router.get("/dashboard",recentOrder);
 router.post("/orderItem",orderItem)
 
 //Order History Route
-router.get("/orderHistory",orderHistoryUser)
+router.post("/orderHistory",orderHistoryUser)
 
 
 

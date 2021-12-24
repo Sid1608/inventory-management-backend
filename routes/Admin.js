@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const {updateUser,deleteUser,allUsers} = require("../controllers/userController")
 const {allOrders,orderHistoryAll,rejectOrder,acceptOrder}=require("../controllers/orderController");
 const {inventory}=require("../controllers/inventoryController");
-const {issuedItems}=require("../controllers/itemController");
+const {issuedItems,addItem}=require("../controllers/itemController");
 //1.Inventory Route
 router.get("/inventory",inventory);
 
@@ -23,6 +23,6 @@ router.delete("/deleteUser/:username",deleteUser);
 
 router.delete("/deleteOrder",rejectOrder);
 router.patch("/acceptOrder",acceptOrder);
-
+router.post("/addItem",addItem);
 // router.get("/viewBill",viewBill);
 module.exports=router;

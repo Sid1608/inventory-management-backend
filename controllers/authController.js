@@ -1,7 +1,7 @@
 const User=require("../models/User");
 const bcrypt = require("bcrypt");//asynchronous function 
 const jwt=require("jsonwebtoken")
-
+const mongoose = require("mongoose")
 
 ///Register User
 exports.registerUser = async (req,res)=>{
@@ -14,9 +14,11 @@ exports.registerUser = async (req,res)=>{
         //create new user
         console.log(req.body.username);
         const newUser= await new User({
+            _id: new mongoose.Types.ObjectId(),
             username:req.body.username,
             password:hashedPassword,
-            Department:req.body.Department,
+            department:req.body.department,
+            name:req.body.name
         })
         //save user and respond
         const user=await newUser.save();
