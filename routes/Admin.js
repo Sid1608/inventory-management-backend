@@ -2,8 +2,8 @@ const router=require("express").Router();
 const User=require("../models/User");
 const bcrypt = require("bcrypt");
 const {updateUser,deleteUser,allUsers} = require("../controllers/userController")
-const {allOrders,orderHistoryAll,rejectOrder,acceptOrder}=require("../controllers/orderController");
-const {inventory}=require("../controllers/inventoryController");
+const {allOrders,searchOrder,orderHistoryAll,rejectOrder,acceptOrder}=require("../controllers/orderController");
+const {inventory,searchItem,FSN1,FSN2,toInventory}=require("../controllers/inventoryController");
 const {issuedItems,addItem}=require("../controllers/itemController");
 //1.Inventory Route
 router.get("/inventory",inventory);
@@ -11,6 +11,7 @@ router.get("/inventory",inventory);
 // 2.Get All Orders Route
 router.get("/orders",allOrders);
 
+router.get("/searchOrder/:orderId",searchOrder);
 //3.Issued Items Route
 // router.get("/issuedItems",issuedItems);
 
@@ -21,8 +22,16 @@ router.patch("/updateUser",updateUser);
 //6.Delete User
 router.delete("/deleteUser/:username",deleteUser);
 
-router.delete("/deleteOrder",rejectOrder);
-router.patch("/acceptOrder",acceptOrder);
+
+router.delete("/rejectOrder/:orderId",rejectOrder);
+router.patch("/acceptOrder/:orderId",acceptOrder);
+
 router.post("/addItem",addItem);
-// router.get("/viewBill",viewBill);
+router.get("/searchItem",searchItem);
+
+router.get("/fsn2",FSN1);
+router.get("/fsn1",FSN2);
+router.get("/inventory",inventory);
+router.get("/toInventory",toInventory);
+
 module.exports=router;

@@ -2,10 +2,9 @@ const mongoose=require('mongoose');
 
 const InventorySchema =new mongoose.Schema({
     item_id:{
-        type:mongoose.Schema.Types.ObjectId,
+        type:String,
         require: true,
-        unique:true,
-        ref:'Item'
+        unique:true
     },
     item_count:{
         type: Number,
@@ -15,6 +14,12 @@ const InventorySchema =new mongoose.Schema({
         type:Number,
         default:0,
         
+    },
+    date_purchased:{
+        type:Date,
+        require: true,
+        unique:true
+
     }
 },
 {
