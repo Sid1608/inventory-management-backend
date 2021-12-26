@@ -1,6 +1,7 @@
 const User=require("../models/User");
 const bcrypt = require("bcrypt");//asynchronous function 
-const jwt=require("jsonwebtoken")
+const jwt=require("jsonwebtoken");
+
 // Getting all users: only Admin
 exports.allUsers =async (req,res)=>{
 		User.find(function (err, users) {
@@ -37,7 +38,7 @@ exports.updateUser = async (req,res)=>{
 }
 
 //Deleting User :only admin
-exports.deleteUser=async (req,res)=>{
+exports.deleteUser= (req,res)=>{
     
     User.deleteOne({username:req.params.username},function(err){
         if(!err){

@@ -36,7 +36,7 @@ exports.inventory=async (req,res)=>{
 }
 
 exports.searchItem=async function(req,res){
-    const item_id = req.body.item_id;
+    const item_id = req.params.itemId;
   
     Inventory.findOne({item_id: item_id},function(err,foundItem){
         if (err) throw err;
