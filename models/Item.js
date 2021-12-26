@@ -2,7 +2,7 @@ const mongoose=require('mongoose');
 
 const ItemSchema =new mongoose.Schema({
     _id:{
-        type:mongoose.Schema.Types.ObjectId
+        type: mongoose.Schema.Types.ObjectId
     },
     item_name:{
         type: String,
@@ -21,6 +21,15 @@ const ItemSchema =new mongoose.Schema({
     item_count:{
         type:Number,
         default:1,
+    },
+    issued_count:{
+        type:Number,
+        default:0,
+        
+    },
+    date_purchased:{
+        type:Date,
+        require: true,
     }
    
 },

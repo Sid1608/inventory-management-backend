@@ -3,8 +3,7 @@ const User=require("../models/User");
 const bcrypt = require("bcrypt");
 const {updateUser,deleteUser,allUsers} = require("../controllers/userController")
 const {allOrders,searchOrder,orderHistoryAll,rejectOrder,acceptOrder}=require("../controllers/orderController");
-const {inventory,searchItem,FSN1,FSN2,toInventory}=require("../controllers/inventoryController");
-const {issuedItems,addItem}=require("../controllers/itemController");
+const {inventory,searchItem,FSN1,FSN2,toInventory,issuedItems,addItem}=require("../controllers/itemController");
 
 //1.Inventory Route
 router.get("/inventory",inventory);
