@@ -4,7 +4,7 @@ const Order= require("../models/Order")
 const mongoose = require("mongoose")
 
 // getting all order: for admin
-exports.allOrders=async function(req,res){
+exports.allOrders=function(req,res){
 		Order.find(function (err, orders) {
 			if (!err) {
 				res.status(200).json({order:orders});
@@ -17,7 +17,7 @@ exports.allOrders=async function(req,res){
 
 
 //getting specific user order History: for user
-exports.orderHistoryUser=async function(req,res){
+exports.orderHistoryUser= function(req,res){
     Order.find({user_id:req.params.userId},(err,orders)=>{
         if(!err){
             res.status(200).json({orders:orders});
@@ -30,7 +30,7 @@ exports.orderHistoryUser=async function(req,res){
 
 
 // for Searching order by orderid and for Order Details
-exports.searchOrder = async function(req,res){
+exports.searchOrder = function(req,res){
     Order.findOne({order_id :req.params.orderId},function(err,foundOrder){
     if(!err){
         res.send(foundOrder);
@@ -42,7 +42,7 @@ exports.searchOrder = async function(req,res){
 }
 
 //Getting Recent Orders: to be display in user dashboard
-exports.recentOrder =async (req,res)=>{
+exports.recentOrder =(req,res)=>{
     const user_id=req.params.userId
     var query = {order_date: -1}; // we have to take the item_id of the item which we want to add into inventory. 
     Order.find({user_id:user_id},(err, result)=>{

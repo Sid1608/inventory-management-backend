@@ -2,7 +2,7 @@ const User=require("../models/User");
 const Item=require("../models/Item");
 const mongoose = require("mongoose")
 
-exports.FSN1=async (req,res)=>{
+exports.FSN1=(req,res)=>{
     var query1 = {date_purchased: {$lt: new Date((new Date())-43800*60*60*1000)}}; // we have to take the item_id of the item which we want to add into inventory. 
     Item.find(query1,function (err,foundItems) {
         if (!err) {
@@ -15,7 +15,7 @@ exports.FSN1=async (req,res)=>{
     
 }
 
-exports.FSN2=async (req,res)=>{
+exports.FSN2=(req,res)=>{
     var query2 = {date_purchased: {$lt: new Date((new Date())-2*43800*60*60*1000)}}; // we have to take the item_id of the item which we want to add into inventory. 
     Item.find(query2,function (err, foundItems) {
         if (!err) {
@@ -26,7 +26,7 @@ exports.FSN2=async (req,res)=>{
         }
     })
 }
-exports.inventory=async (req,res)=>{
+exports.inventory= (req,res)=>{
     Item.find((err,items)=>{
         if(!err){
             res.send(items);
@@ -37,18 +37,13 @@ exports.inventory=async (req,res)=>{
    
 
 }
-exports.searchItem=async function(req,res){
+exports.searchItem= function(req,res){
     const item_id = req.params.itemId;
   
-    Item.findOne({item_id: item_id},function(err,foundItem){
+    Item.findOne({_id: item_id},function(err,foundItem){
         if (err) throw err;
-        console.log(foundItem);   
+        res.status(200).send({item:foundItem}) 
     })
-    // Inventory.findOne({item_id: item_id}).populate("Item").exec(function(err,foundItem){
-    //     if (err) throw err;
-    //     res.status(200).json({item:foundItem});
-    // })
-
 }
 
 // exports.issuedItems=async (req,res)=>{
@@ -75,22 +70,51 @@ exports.addItem=async (req,res)=>{
 }
 
 
-exports.itemCost =async (req,res)=>{
-    var query = {expected_cost: -1}; // we have to take the item_id of the item which we want to add into inventory. 
-    Item.find().sort(query).toArray(function (err, result) {
-        if (err) throw err;
-        res.status(200).json({order:result[0]});
-    });
-}
-
-exports.toInventory=async (req,res)=>{
-    const item_id = req.body.item_id;
-    Item.findOneAndUpdate({ item_id:item_id },{$inc:{item_count:1,issued_count:-1}},function(err,doc){
+exports.itemCost1 = (req,res)=>{
+    query={expected_cost:{$lt:10000}}
+    Item.find(query,function(err,foundItem){
         if(err){
-            console.log(err);
+            res.status(404).json({error:err})
         }
         else{
-            console.log(doc);
+            res.status(200).json({items:foundItems})
+        }
+    })
+    
+}
+exports.itemCost2 =(req,res)=>{
+    query={expected_cost:{$lt:100000,$gt:10000}}
+    Item.find(query,function(err,foundItems){
+        if(err){
+            res.status(404).json({error:err})
+        }
+        else{
+            res.status(200).json({items:foundItems})
+        }
+    })
+    
+}
+exports.itemCost3 =(req,res)=>{
+    query={expected_cost:{$gt:100000}}
+    Item.find(query,function(err,foundItem){
+        if(err){
+            res.status(404).json({error:err})
+        }
+        else{
+            res.status(200).json({items:foundItems})
+        }
+    })
+    
+}
+
+exports.toInventory= (req,res)=>{
+    const item_id = req.body.item_id;
+    Item.findOneAndUpdate({ _id:item_id },{$inc:{item_count:1,issued_count:-1}},function(err,doc){
+        if(err){
+            res.status(404).json({error:err})
+        }
+        else{
+            res.status(200).json({doc:doc})
         }
     }
     )

@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");//asynchronous function
 const jwt=require("jsonwebtoken");
 
 // Getting all users: only Admin
-exports.allUsers =async (req,res)=>{
+exports.allUsers =(req,res)=>{
 		User.find(function (err, users) {
 			if (!err) {
 				res.status(200).json({users:users});

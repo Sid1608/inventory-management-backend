@@ -13,11 +13,6 @@ const OrderSchema =new mongoose.Schema({
         required:true,
         
     },
-    // item_id:{
-    //     type:mongoose.Schema.Types.ObjectId,
-    //     ref: 'Item',
-    //     required:true,
-    // },
     item_count:{
         type:Number,
         default:0,
