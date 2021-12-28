@@ -31,14 +31,16 @@ exports.orderHistoryUser= function(req,res){
 
 // for Searching order by orderid and for Order Details
 exports.searchOrder = function(req,res){
-    Order.findOne({order_id :req.params.orderId},function(err,foundOrder){
+ Order.findOne({order_id :req.params.orderId}).
+  populate('user_id').
+  exec(function (err, foundOrder) {
     if(!err){
         res.send(foundOrder);
     }
     else{
         res.send(err)
     }
-})
+  });
 }
 
 //Getting Recent Orders: to be display in user dashboard
