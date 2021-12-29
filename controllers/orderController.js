@@ -31,7 +31,7 @@ exports.orderHistoryUser= function(req,res){
 
 // for Searching order by orderid and for Order Details
 exports.searchOrder = function(req,res){
- Order.findOne({order_id :req.params.orderId}).
+ Order.findOne({_id :req.params.orderId}).
   populate('user_id').
   exec(function (err, foundOrder) {
     if(!err){

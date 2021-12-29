@@ -24,7 +24,8 @@ exports.updateUser = async (req,res)=>{
     const user={
         username:username,
         password:hashedPassword,
-        Department:req.body.Department,
+        department:req.body.department,
+        name:req.body.name
     }
     User.updateOne({username:username},{$set: user},function(err){
 				if(!err){
