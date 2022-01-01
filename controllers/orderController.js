@@ -44,14 +44,19 @@ exports.searchOrder = function(req,res){
 }
 
 //Getting Recent Orders: to be display in user dashboard
-exports.recentOrder =(req,res)=>{
-    const user_id=req.params.userId
-    var query = {order_date: -1}; // we have to take the item_id of the item which we want to add into inventory. 
-    Order.find({user_id:user_id},(err, result)=>{
-        if (err) throw err;
-        result.sort();
-        res.status(200).json({order:result[0]});
-    });
+exports.recentOrder =async (req,res)=>{
+    try{
+        const user_id=req.params.userId
+        const result= await Order.find().sort({'order_date':-1}).limit(1);
+        if(result){
+            res.status(200).json({order:result[0]});
+        }else{
+            res.status(200).json({err:"you have not ordered anything"});
+        }
+    }catch(err){
+        res.status(404).json({error:err})
+    }
+   
 }
 
 
@@ -62,7 +67,6 @@ exports.orderItem =async (req,res)=>{
         const newOrder = await new Order({
             _id:new mongoose.Types.ObjectId(),
             user_id:req.body.user_id,
-            item_id: req.body.item_id,
             item_count:req.body.item_count,
             remark:req.body.remark,
             order_date:Date.now(),
@@ -70,6 +74,7 @@ exports.orderItem =async (req,res)=>{
             issued_items:req.body.issued_items,
         });
         const order=await newOrder.save();
+        console.log(order);
         res.status(201).json({status: 'Succesfully added a new Order',Order:order});
     }catch(err){
         console.log(err);
@@ -101,25 +106,13 @@ exports.acceptOrder =(req,res)=>{
     Order.find({_id:order_id},(err,order)=>{
         if(!err){
                if(order){
-                   console.log(order)
-                const ord ={
-                    _id:order._id,
-                    item_id: order.item_id,
-                    item_count:order.item_count,
-                    remark:order.remark,
-                    total_cost:order.total_cost,
-                    order_date:order.order_date,
-                    issued_items:order.issued_items,
-                    isVerified:true,
-                }
-                console.log(ord.isVerified,ord.remark);
-                Order.updateOne({_id:order_id},{$set:ord},(err)=>{
-                    if(err){
-                        res.status(500).json(err);
-                    }else{
-                        res.status(200).json("order verified successfully")
-                    }
-                });
+                    Order.updateOne({_id:order_id},{$set:{isVerified:true}},(err)=>{
+                        if(err){
+                            res.status(500).json(err);
+                        }else{
+                            res.status(200).json("order verified successfully")
+                        }
+                    });
 
             }else{
                 res.send("order not found");

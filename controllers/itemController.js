@@ -72,7 +72,7 @@ exports.addItem=async (req,res)=>{
 
 exports.itemCost1 = (req,res)=>{
     query={expected_cost:{$lt:10000}}
-    Item.find(query,function(err,foundItem){
+    Item.find(query,function(err,foundItems){
         if(err){
             res.status(404).json({error:err})
         }
@@ -96,7 +96,7 @@ exports.itemCost2 =(req,res)=>{
 }
 exports.itemCost3 =(req,res)=>{
     query={expected_cost:{$gt:100000}}
-    Item.find(query,function(err,foundItem){
+    Item.find(query,function(err,foundItems){
         if(err){
             res.status(404).json({error:err})
         }

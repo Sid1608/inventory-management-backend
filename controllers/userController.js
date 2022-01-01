@@ -19,21 +19,17 @@ exports.updateUser = async (req,res)=>{
     
     const username=req.body.username;
     const password=req.body.password;
+    const userInfo=await User.findOne({username});
+    !userInfo && res.status(404).json({err:"user does not exits"})
     const salt=await bcrypt.genSalt(10);
     const hashedPassword=await bcrypt.hash(req.body.password,salt);
-    const user={
-        username:username,
-        password:hashedPassword,
-        department:req.body.department,
-        name:req.body.name
-    }
-    User.updateOne({username:username},{$set: user},function(err){
-				if(!err){
+    User.updateOne({username:username},{$set: {password:hashedPassword}},function(err){
+                if(!err){
                     res.status(200).json("Successfully updated password.")
-				}else{
-					res.status(500).json(err);
-				}
-			}
+                }else{
+                    res.status(500).json(err);
+                }
+            }
     )
 
 }

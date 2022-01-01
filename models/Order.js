@@ -1,6 +1,4 @@
 
-
-
 const mongoose=require('mongoose');
 
 const OrderSchema =new mongoose.Schema({
@@ -20,17 +18,15 @@ const OrderSchema =new mongoose.Schema({
     remark:{
         type: String,
         default:""
-        // required: true,
     },
     order_date:{
         type: Date,
-        // required: true,
     },
     total_cost:{
         type:Number,
         default:0,
     },
-    issued_items:[{item_name:String,item_count:Number,description:String}],
+    issued_items:[{item_name:String,item_count:Number,description:String,expected_cost:Number}],
     isVerified:{
         type:Boolean,
         default:false,

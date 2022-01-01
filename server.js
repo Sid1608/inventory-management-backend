@@ -1,7 +1,7 @@
 const express=require("express");
 const mongoose=require('mongoose');
 const dotenv=require("dotenv");
-
+const cors=require("cors");
 const authRoutes=require("./routes/Auth.js"); 
 const userRoutes=require("./routes/Users.js");
 const adminRoutes=require("./routes/Admin.js");
@@ -16,7 +16,7 @@ mongoose.connect(process.env.MONGO_URL,(err)=>{
 })
 
 //Middlewares
-// app.use(cors());
+app.use(cors());
 app.use(express.json());
 app.use("/auth",authRoutes)
 app.use("/user",userRoutes)
