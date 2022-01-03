@@ -35,12 +35,42 @@ exports.searchOrder = function(req,res){
   populate('user_id').
   exec(function (err, foundOrder) {
     if(!err){
-        res.send(foundOrder);
+        res.json({ order: foundOrder });
     }
     else{
         res.send(err)
     }
   });
+}
+
+//Search the orders by Date
+exports.searchByOrderDate = function (req, res) {
+
+    let date = new Date(req.params.orderDate);
+    let date_converted = date.toDateString();
+
+    Order.find(function (err, orders) {
+        if (!err) {
+
+            let result = [];
+            let i;
+            for (i = 0; i < orders.length; i++) {
+
+                const date_to_be = new Date(orders[i].order_date);
+                let temp = date_to_be.toDateString();
+
+                if (temp === date_converted)
+                    result.push(orders[i]);
+            }
+
+            console.log(result);
+            res.send(result);
+        }
+        else {
+            res.send(err);
+        }
+    })
+
 }
 
 //Getting Recent Orders: to be display in user dashboard
@@ -49,7 +79,7 @@ exports.recentOrder =async (req,res)=>{
         const user_id=req.params.userId
         const result= await Order.find().sort({'order_date':-1}).limit(1);
         if(result){
-            res.status(200).json({order:result[0]});
+            res.status(200).json({order:result});
         }else{
             res.status(200).json({err:"you have not ordered anything"});
         }
@@ -58,8 +88,6 @@ exports.recentOrder =async (req,res)=>{
     }
    
 }
-
-
 
 //User order items :only user
 exports.orderItem =async (req,res)=>{
