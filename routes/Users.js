@@ -8,10 +8,10 @@ const {orderHistoryUser,orderItem,recentOrder} =require("../controllers/orderCon
 //1.Dashboard Route
 router.get("/dashboard/:userId",recentOrder);
 
-//1. Order-Items Route
+//2. Order-Items Route
 router.post("/orderItem",orderItem)
 
-//Order History Route
+//3. Order History Route
 router.get("/orderHistory/:userId",orderHistoryUser)
 
 

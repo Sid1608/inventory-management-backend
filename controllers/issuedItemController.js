@@ -4,7 +4,7 @@ exports.IssuedItem = (req, res) => {
     IssuedItem.find({},(err, items) => {
         if (!err) {
             console.log("items")
-            res.send(items);
+            res.status(200).json({items:items});
         } else {
             console.log("err")
             res.send(err);
@@ -32,9 +32,9 @@ exports.issueItem=async (req,res)=>{
             username:req.body.username,
         })
         const issuedItem = await newIssuedItem.save();
-        res.status(200).json({issuedItem:issuedItem});
+        res.status(200).json({item:issuedItem});
     }catch(err){
         console.log(err);
-        res.status(500).json({issuedItem:false});
+        res.status(500).json({item:false});
     }
 }

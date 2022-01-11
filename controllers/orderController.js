@@ -7,7 +7,7 @@ const mongoose = require("mongoose")
 exports.allOrders=function(req,res){
 		Order.find(function (err, orders) {
 			if (!err) {
-				res.status(200).json({order:orders});
+				res.status(200).json({orders:orders});
 			}
 			else {
 				res.send(err);
@@ -38,7 +38,7 @@ exports.searchOrder = function(req,res){
         res.json({ order: foundOrder });
     }
     else{
-        res.send(err)
+        res.status(404).json({error:err});
     }
   });
 }
@@ -64,10 +64,10 @@ exports.searchByOrderDate = function (req, res) {
             }
 
             console.log(result);
-            res.send(result);
+            res.status(200).json({order:result});
         }
         else {
-            res.send(err);
+            res.status(404).json({error:err});
         }
     })
 

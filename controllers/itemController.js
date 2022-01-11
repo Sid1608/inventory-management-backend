@@ -6,7 +6,7 @@ exports.FSN1=(req,res)=>{
     var query1 = {date_purchased: {$lt: new Date((new Date())-43800*60*60*1000)}}; // we have to take the item_id of the item which we want to add into inventory. 
     Item.find(query1,function (err,foundItems) {
         if (!err) {
-            res.status(200).json({foundItems:foundItems});
+            res.status(200).json({items:foundItems});
         }
         else {
             res.send(err);
@@ -19,7 +19,7 @@ exports.FSN2=(req,res)=>{
     var query2 = {date_purchased: {$lt: new Date((new Date())-2*43800*60*60*1000)}}; // we have to take the item_id of the item which we want to add into inventory. 
     Item.find(query2,function (err, foundItems) {
         if (!err) {
-            res.status(200).json({foundItems:foundItems});
+            res.status(200).json({items:foundItems});
         }
         else {
             res.send(err);
@@ -29,7 +29,7 @@ exports.FSN2=(req,res)=>{
 exports.inventory= (req,res)=>{
     Item.find((err,items)=>{
         if(!err){
-            res.send(items);
+            res.status(200).json({items:items});
         }else{
             res.send(err);
         }
@@ -46,11 +46,7 @@ exports.searchItem= function(req,res){
     })
 }
 
-// exports.issuedItems=async (req,res)=>{
-    
-// }
 
-// add Item : Only Admin
 exports.addItem=async (req,res)=>{
     try{
         const newItem= await new Item({
@@ -126,30 +122,19 @@ exports.issuedDecreaser = (req, res) => {
     Item.findById(item_id, (err, item) => {
         if (!err) {
             if (item) {
-                const ord = {
-                    _id: item._id,
-                    item_name: item.item_name,
-                    item_description: item.item_description,
-                    item_id: item.item_id,
-                    item_count: item.item_count,
-                    expected_cost: item.expected_cost,
-                    issued_count: item.issued_count + 1,
-                    date_purchased: item.date_purchased
-                }
-
                 if (item.item_count == ord.issued_count) {
                     Item.findByIdAndDelete(item_id, (err) => {
                         if (err) {
-                            res.status(500).json(err);
+                            res.status(500).json({error:err});
                         } else {
                             res.status(200).json("Item issued successfully");
                         }
                     });
                 }
                 else {
-                    Item.findByIdAndUpdate(item_id, { $set: ord }, (err) => {
+                    Item.findByIdAndUpdate(item_id, { $set:{issued_count:issued_count + 1} }, (err) => {
                         if (err) {
-                            res.status(500).json(err);
+                            res.status(500).json({error:err});
                         } else {
                             res.status(200).json("item issued successfully")
                         }
@@ -160,7 +145,7 @@ exports.issuedDecreaser = (req, res) => {
                 res.send("item not found");
             }
         } else {
-            res.send(err);
+            res.status(500).json({error:err});
         }
     })
 

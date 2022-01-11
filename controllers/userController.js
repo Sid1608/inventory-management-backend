@@ -27,7 +27,7 @@ exports.updateUser = async (req,res)=>{
                 if(!err){
                     res.status(200).json("Successfully updated password.")
                 }else{
-                    res.status(500).json(err);
+                    res.status(500).json({error:err});
                 }
             }
     )
@@ -41,7 +41,7 @@ exports.deleteUser= (req,res)=>{
         if(!err){
             res.status(200).json("user deleted successfully");
         }else{
-            res.status(500).json(err);
+            res.status(500).json({error:err});
         }
     });
   
